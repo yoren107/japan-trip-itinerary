@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南星旅行團 - 東京長野小助手</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container" id="main-container">
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav-dates">
+                <button class="nav-button date-button" data-day="day1" data-temp-key="day1">1/22</button>
+                <button class="nav-button date-button" data-day="day2" data-temp-key="day2">1/23</button>
+                <button class="nav-button date-button" data-day="day3" data-temp-key="day3">1/24</button>
+                <button class="nav-button date-button" data-day="day4" data-temp-key="day4">1/25</button>
+                <button class="nav-button date-button" data-day="day5" data-temp-key="day5">1/26</button>
+                <button class="nav-button date-button" data-day="day6" data-temp-key="day6">1/27</button>
+                <button class="nav-button date-button" data-day="day7" data-temp-key="day7">1/28</button>
+            </nav>
+            <nav class="nav-utilities">
+                <button class="nav-button util-button" data-day="rate">換算匯率</button>
+                <button class="nav-button util-button" data-day="notes">注意事項</button>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            <button id="sidebar-toggle" class="toggle-btn">
+                <span class="material-icons">menu</span>
+            </button>
+
+            <header>
+                <h1>南星旅行團</h1>
+                <h2>東京長野</h2>
+            </header>
+            
+            <section id="itinerary-display" class="display-box">
+                <p>顯示行程</p>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
