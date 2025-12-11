@@ -5,20 +5,15 @@
  * -------------------------------------- */
 
 :root {
-    /* 主要字體 - M PLUS Rounded 1c (圓體) */
     --main-font: 'M PLUS Rounded 1c', sans-serif;
-    
-    /* 顏色變數 */
     --color-primary: #f7f7f7;
     --color-secondary: #0a0a0a;
     --color-text: #0a0a0a;
     --color-text-light: #555;
     --color-card-bg: rgba(255, 255, 255, 0.9); 
-    --color-accent: #007bff; /* 常用作連結或按鈕的強調色 */
+    --color-accent: #007bff; 
     --color-temp-hot: #e74c3c;
     --color-temp-cold: #3498db;
-    
-    /* 背景圖片變數 (JS會動態修改這個變數) */
     --bg-image: url('images/tokyo-tower-bg.jpg'); 
 }
 
@@ -45,20 +40,12 @@ body {
     font-family: var(--main-font);
     color: var(--color-text);
     min-height: 100vh;
-    background-color: var(--color-primary); /* 後備顏色 */
-    
-    /* 圖片來源：使用變數 --bg-image */
+    background-color: var(--color-primary); 
     background-image: var(--bg-image); 
-    
-    /* 🌟 修正：確保圖片固定在視窗，不隨內容捲動 (為手機優化) 🌟 */
-    background-attachment: fixed;
-    
-    /* 確保圖片縮放以覆蓋整個視窗，不重複 */
+    background-attachment: fixed; /* 圖片固定 */
     background-size: cover;           
     background-repeat: no-repeat;
     background-position: center;      
-    
-    /* 圖片切換的過渡動畫 */
     transition: background-image 0.8s ease-in-out, background-color 0.5s;
 }
 
@@ -81,7 +68,8 @@ body.nagano-bg {
 .container {
     display: flex;
     min-height: 100vh;
-    overflow-x: hidden; /* 防止側邊欄藏起來時出現捲軸 */
+    overflow-x: hidden;
+    position: relative; /* 為了讓頂部標題能夠絕對定位 */
 }
 
 /* --------------------------------------
@@ -90,30 +78,18 @@ body.nagano-bg {
 
 .sidebar {
     width: 280px; 
-    
-    /* 🌟 修正：將底色設為黑色 (0, 0, 0)，透明度 60% (0.6) 🌟 */
-    background-color: rgba(0, 0, 0, 0.6); 
-    
+    background-color: rgba(0, 0, 0, 0.6); /* 黑色 60% 透明度 */
     z-index: 1000;
-    
-    /* 🌟 修正：將定位屬性設為固定，確保選單不隨內容捲動 🌟 */
     position: fixed; 
     top: 0; 
     left: 0; 
-    
-    /* 確保側邊欄佔滿整個視窗高度 */
     height: 100vh; 
-    
-    /* 確保內容超出時，側邊欄可以單獨捲動 */
     overflow-y: auto; 
-    
-    /* 保持隱藏和過渡效果 */
     transform: translateX(-100%);
     transition: transform 0.3s ease-out;
-
     padding: 20px;
-    padding-top: 80px; /* 給頂部選單按鈕留出空間 */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* 陰影顏色調深一點 */
+    padding-top: 80px; 
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); 
 }
 
 .container.sidebar-open .sidebar {
@@ -127,7 +103,7 @@ body.nagano-bg {
 .main-content {
     flex-grow: 1;
     padding: 20px;
-    padding-left: 300px; /* 為桌面版側邊欄留出空間 */
+    padding-left: 300px; /* 桌面版側邊欄空間 */
     transition: padding-left 0.3s;
     min-width: 0; 
 }
@@ -145,11 +121,8 @@ body.nagano-bg {
     width: 100%;
     padding: 15px 20px;
     margin-bottom: 10px;
-    
-    /* 🌟 修正：在黑色背景上，按鈕使用半透明白色，文字變為白色 🌟 */
     background-color: rgba(255, 255, 255, 0.15); 
     color: white; /* 確保文字在深色背景上可讀 */
-    
     border: none;
     border-radius: 10px;
     text-align: left;
@@ -165,7 +138,6 @@ body.nagano-bg {
 }
 
 .nav-button.active {
-    /* 選中的按鈕使用強調色，且文字為白色 */
     background-color: var(--color-accent);
     color: white;
     font-weight: bold;
@@ -178,12 +150,10 @@ body.nagano-bg {
 
 #utility-navigation .nav-button {
     margin-top: 20px; 
-    
-    /* 🌟 修正：強制使用亮色背景和深色文字，提高警示度 🌟 */
     background-color: #ffda79; /* 亮黃色 */
     color: #333; /* 深色文字 */
     font-weight: bold;
-    backdrop-filter: none; /* 移除模糊，確保顏色清晰 */
+    backdrop-filter: none; 
     -webkit-backdrop-filter: none;
 }
 
@@ -196,8 +166,8 @@ body.nagano-bg {
     max-width: 800px;
     margin: 0 auto;
     
-    /* 🌟 修正：強制使用固定的半透明白色背景，確保卡片可讀性 🌟 */
-    background-color: rgba(255, 255, 255, 0.9); /* 固定為淺色背景 */
+    /* 🌟 確保卡片底色 🌟 */
+    background-color: rgba(255, 255, 255, 0.9); 
     
     padding: 30px;
     border-radius: 20px;
@@ -270,21 +240,18 @@ h1#itinerary-title, #notes-title {
     flex-grow: 1;
     padding-left: 15px;
     
-    /* 🌟 修正：新增背景區塊，讓文字不被背景影響 🌟 */
-    background-color: rgba(255, 255, 255, 0.9); /* 使用半透明白色背景 */
-    padding: 10px 15px; /* 增加內邊距 */
-    border-radius: 8px; /* 增加圓角 */
-    
+    /* 🌟 修正：為每個行程項目新增獨立底色 (字卡設計) 🌟 */
+    background-color: rgba(255, 255, 255, 0.9); 
+    padding: 10px 15px; 
+    border-radius: 8px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    
-    /* 🌟 調整文字顏色：背景變白，文字應變為深色 🌟 */
-    color: var(--color-text); /* 使用深色文字變數 */
+    color: var(--color-text); /* 確保文字是深色 */
 }
 
 /* 確保夜間模式下，行程細節背景和文字顏色正確切換 */
 body.dark-mode .event-details {
-    background-color: rgba(30, 30, 30, 0.95); /* 夜間模式使用深色背景 */
-    color: var(--color-text); /* 文字顏色會從 dark-mode 變數中繼承亮色 */
+    background-color: rgba(30, 30, 30, 0.95); 
+    color: var(--color-text); 
 }
 
 /* --------------------------------------
@@ -332,22 +299,20 @@ body.dark-mode .event-details {
     
     /* 1. 主內容區修正 (Content Area) */
     .main-content {
+        /* 手機上移除桌面版偏移，並為頂部按鈕留出空間 */
         padding-left: 20px; 
         padding-right: 20px; 
-        /* 🌟 修正：確保內容頂部有足夠空間，避免被選單按鈕遮蓋 🌟 */
-        padding-top: 80px; 
-        
-        /* 確保手機上不會有桌面版 300px 的偏移 */
-        padding-left: 20px; 
+        padding-top: 80px; /* 留出空間給頂部標題和漢堡選單 */
+        padding-left: 20px;
     }
-
+    
     /* 2. 漢堡選單按鈕 (#menu-toggle) 修正 */
     #menu-toggle {
         display: block;
         position: fixed; 
         top: 20px;
         left: 20px;
-        z-index: 1002; /* 必須高於所有浮動元素 */
+        z-index: 1002; /* 確保在最上層 */
         
         font-size: 1.5em;
         background: rgba(255, 255, 255, 0.8);
@@ -357,17 +322,16 @@ body.dark-mode .event-details {
         border: none;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
-
-    /* 3. 頂部標題置中修正 */
-    /* 假設您的頂部標題是被單獨的 HTML 元素 (如 H1/H2 或 DIV) 包裹，這將嘗試將它們在手機上置中 */
-    /* 如果標題是用專門的 class 包裹 (例如 .header-title-container)，請在 index.html 內設置 */
+    
+    /* 3. 頂部標題置中修正 (解決被擠壓問題) */
+    /* 假設您的標題是 H1/H2 */
     .main-content > h1, 
     .main-content > h2,
     .main-content > p {  
-        text-align: center; /* 將標題內容置中 */
+        text-align: center; 
         margin-left: auto;
         margin-right: auto;
-        max-width: 100%;
+        width: 100%; /* 確保佔滿寬度才能居中 */
     }
 }
 
