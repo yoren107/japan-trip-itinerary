@@ -26,7 +26,7 @@ const dayLocations = {
 // ====== 2. 行程資料庫 (內容不變) ======
 const itineraryData = {
     day1: { 
-        date: "1/22 (三)", 
+        date: "1/22 (四)", 
         tempKey: "day1", 
         schedule: [
             { time: "10:30", event: "桃園機場 第二航廈 集合" },
@@ -39,7 +39,7 @@ const itineraryData = {
         ]
     },
     day2: { 
-        date: "1/23 (四)", 
+        date: "1/23 (五)", 
         tempKey: "day2", 
         schedule: [
             { time: "09:00", event: "出發 (起點：Super Hotel)" },
@@ -52,7 +52,7 @@ const itineraryData = {
         ]
     },
     day3: { 
-        date: "1/24 (五)", 
+        date: "1/24 (六)", 
         tempKey: "day3", 
         schedule: [
             { time: "ALL DAY", event: "❄️ 滑雪行程 (盡情享受長野粉雪)" },
@@ -60,7 +60,7 @@ const itineraryData = {
         ]
     },
     day4: { 
-        date: "1/25 (六)", 
+        date: "1/25 (日)", 
         tempKey: "day4", 
         schedule: [
             { time: "早餐", event: "於飯店用餐" },
@@ -72,7 +72,7 @@ const itineraryData = {
         ]
     },
     day5: { 
-        date: "1/26 (日)",
+        date: "1/26 (一)",
         tempKey: "day5", 
         schedule: [
             { time: "07:30", event: "出門" },
@@ -85,7 +85,7 @@ const itineraryData = {
         ]
     },
     day6: { 
-        date: "1/27 (一)", 
+        date: "1/27 (二)", 
         tempKey: "day6", 
         schedule: [
             { time: "10:00", event: "秋葉原 (JUMP SHOP、安麗美特、Radio Kaikan)" },
@@ -96,7 +96,7 @@ const itineraryData = {
         ]
     },
     day7: { 
-        date: "1/28 (二)", 
+        date: "1/28 (三)", 
         tempKey: "day7", 
         schedule: [
             { time: "10:00", event: "完成退房" },
@@ -112,12 +112,27 @@ const itineraryData = {
         tempKey: "notes",
         isUtility: true,
         contentHTML: `
-            <li><strong>🥶 衣物：</strong>長野山區非常冷，請務必準備帽子、手套、圍巾。</li>
-            <li><strong>📱 網路：</strong>確認 SIM 卡或 WiFi 機是否已準備好。</li>
-            <li><strong>🛂 文件：</strong>護照、VJW (Visit Japan Web) 截圖。</li>
-            <li><strong>💊 藥品：</strong>常備藥、腸胃藥、暈車藥。</li>
+            <li><strong> 衣物：</strong>滑雪需自備雪衣、雪褲、手套、脖圍、面罩、毛帽、長襪。</li>
+            <li><strong> 手機：</strong>日本電壓110v，跟台灣通用。</li>
+            <li><strong> 網路：</strong>確認 SIM 卡沒有過期。</li>
+            <li><strong> 文件：</strong>護照、VJW (Visit Japan Web) 截圖。</li>
+            <li><strong> 藥品：</strong>常備藥、腸胃藥、暈車藥。</li>
+            <li><strong> 車費：包車一人29,300/日圓，在機場時統一收日圓。</li>
         `
-    }
+    },
+    notes: {
+        date: "住宿資料",
+        tempKey: "notes",
+        isUtility: true,
+        contentHTML: `
+            <li><strong> Super Hotel Tokyo Kameido </strong></li>
+            <li>2 Chome-13-6 Kameido, Koto City, Tokyo 136-0071日本</li>
+            <li><strong> 志賀陽光酒店 </strong></li>
+            <li>  Nagano, Shimotakai District, Yamanochi, 志賀高原高天ケ原7149 </li>
+            <li><strong> TOKYO GR HOUSE </strong></li>
+            <li> 地址待更新 </li>
+        `
+    },
 };
 
 // ====== 3. 邏輯控制 ======
@@ -286,3 +301,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
