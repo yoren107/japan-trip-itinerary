@@ -114,7 +114,7 @@ body.nagano-bg {
     padding: 20px;
     padding-top: 80px; /* 給頂部選單按鈕留出空間 */
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
- 
+
 }
 
 .container.sidebar-open .sidebar {
@@ -355,6 +355,7 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
 
 
