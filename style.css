@@ -91,7 +91,7 @@ body.nagano-bg {
 
 .sidebar {
     width: 280px; 
-    background-color: var(--color-primary); 
+    background-color: rgba(0, 0, 0, 0.6); 
     z-index: 1000;
     
     /* 核心修正：將定位屬性設為固定，確保選單不隨內容捲動 */
@@ -352,4 +352,5 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
