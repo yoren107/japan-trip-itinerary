@@ -295,8 +295,6 @@ h1#itinerary-title, #notes-title {
     animation: staggerSlideIn 0.4s ease-out forwards;
 }
 
-/* style.css */
-
 /* --------------------------------------
  * 13. 行動裝置和響應式設計
  * -------------------------------------- */
@@ -356,4 +354,5 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
