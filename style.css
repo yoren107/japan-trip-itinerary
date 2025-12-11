@@ -171,7 +171,7 @@ body.nagano-bg {
 /* style.css */
 
 /* -------------------------------------- */
-/* 8. ⚠️ 注意事項按鈕專屬樣式 (Utility Button) */
+/* 7.5. ⚠️ 注意事項按鈕專屬樣式 (Utility Button) */
 /* -------------------------------------- */
 
 /* 確保「注意事項」按鈕 (它可能沒有專門的類別，但它位於 #utility-navigation 容器內) */
@@ -205,7 +205,10 @@ body.nagano-bg {
 .itinerary-display, .notes-display {
     max-width: 800px;
     margin: 0 auto;
-    background-color: var(--color-card-bg);
+    
+    /* 🌟 最終修正：強制使用固定的半透明白色背景 🌟 */
+    background-color: rgba(255, 255, 255, 0.9); /* 使用固定值取代 var() */
+    
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -217,12 +220,6 @@ body.nagano-bg {
     transition: opacity 0.5s, transform 0.5s;
     position: relative;
 }
-
-.itinerary-display.active-display, .notes-display.active-display {
-    opacity: 1;
-    transform: translateY(0);
-}
-
 /* --------------------------------------
  * 9. 標題與溫度
  * -------------------------------------- */
@@ -355,6 +352,7 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
 
 
