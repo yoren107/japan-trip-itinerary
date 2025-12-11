@@ -4,41 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>南星旅行團 - 東京長野小助手</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;400;500;700&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="overlay" id="overlay"></div>
 
-    <div class="container" id="main-container">
-        <aside class="sidebar" id="sidebar">
-            <nav class="nav-dates">
-                <button class="nav-button date-button" data-day="day1" data-temp-key="day1">1/22</button>
-                <button class="nav-button date-button" data-day="day2" data-temp-key="day2">1/23</button>
-                <button class="nav-button date-button" data-day="day3" data-temp-key="day3">1/24</button>
-                <button class="nav-button date-button" data-day="day4" data-temp-key="day4">1/25</button>
-                <button class="nav-button date-button" data-day="day5" data-temp-key="day5">1/26</button>
-                <button class="nav-button date-button" data-day="day6" data-temp-key="day6">1/27</button>
-                <button class="nav-button date-button" data-day="day7" data-temp-key="day7">1/28</button>
-            </nav>
-            <nav class="nav-utilities">
-                <button class="nav-button util-button" data-day="rate">換算匯率</button>
-                <button class="nav-button util-button" data-day="notes">注意事項</button>
-            </nav>
+    <button class="toggle-btn" id="menu-toggle">☰</button>
+
+    <div class="container animate-fade-in">
+        
+        <aside class="sidebar">
+            <nav id="date-navigation" class="nav-dates">
+                </nav>
+            <nav id="utility-navigation" class="nav-utilities">
+                </nav>
         </aside>
 
-        <main class="content-area">
-            <button id="sidebar-toggle" class="toggle-btn">
-                <span class="material-icons">menu</span>
-            </button>
+        <div class="overlay" id="overlay"></div>
 
+        <main class="content-area">
             <header>
-                <h1>南星旅行團</h1>
-                <h2>東京長野</h2>
+                <h1>南星旅行團 🇯🇵</h1>
+                <h2>東京・長野七日遊</h2>
             </header>
             
-            <section id="itinerary-display" class="display-box">
-                <p>顯示行程</p>
+            <section id="itinerary-display" class="display-box active-display">
+                <h3 id="itinerary-title">請點選左側日期</h3>
+                <ul id="schedule-list" class="schedule-list">
+                    </ul>
+            </section>
+            
+            <section id="notes-display" class="display-box">
+                <h3 id="notes-title"></h3>
+                <ul id="notes-content" class="notes-list">
+                    </ul>
             </section>
         </main>
     </div>
