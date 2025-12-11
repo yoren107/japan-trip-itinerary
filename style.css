@@ -311,3 +311,21 @@ body {
     .overlay { display: none; }
 
 }
+
+.sidebar {
+    /* ... 保持您原有的 width, background-color, z-index 等屬性 ... */
+
+    /* 🌟 關鍵修正：將側邊欄固定在瀏覽器視窗內 🌟 */
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+
+    /* 確保側邊欄在需要時可以內部捲動 */
+    height: 100vh; 
+    overflow-y: auto; 
+
+    /* 確保其餘樣式設定不會遺失 */
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-out;
+}
