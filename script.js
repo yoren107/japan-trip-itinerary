@@ -1,313 +1,288 @@
-/* style.css (最終版：圓體字型、全域優雅動畫、動態背景) */
+// script.js (最終修正：確保背景圖在注意事項頁面和行程頁面正確顯示)
 
-/* --- 1. CSS 變數定義 --- */
-:root {
-    --bg-image: url('images/tokyo-night-bg.jpg');
-    /* Light Mode 顏色 */
-    --sidebar-bg-color: rgba(255, 255, 255, 0.75);
-    --content-bg-color: rgba(255, 255, 255, 0.75);
-    --text-color: #222222;
-    --secondary-text-color: #333333;
-    --temp-color: #00695c;
-    --time-color: #222222;
-    --button-bg-color: rgba(255, 255, 255, 0.6);
-    --button-active-color: rgba(255, 255, 255, 0.9);
-    --button-text-color: #222222;
-    --util-hover-color: rgba(240, 240, 240, 0.6);
-    --border-color: rgba(100, 100, 100, 0.3);
-    --overlay-color: rgba(0, 0, 0, 0.6);
-    --header-text-color: #ffffff; 
-}
+// ====== 1. 溫度與地點設定 (不變) ======
+const updatedTemperatures = {
+    day1: "東京 (1/22)：4°C ~ 11°C",
+    day2: "長野 (1/23)：-3°C ~ 4°C",
+    day3: "長野 (1/24)：-6°C ~ 1°C",
+    day4: "東京 (1/25)：5°C ~ 12°C",
+    day5: "東京 (1/26)：6°C ~ 13°C",
+    day6: "東京 (1/27)：7°C ~ 14°C",
+    day7: "東京 (1/28)：5°C ~ 12°C",
+};
 
-/* Dark Mode (夜間模式) */
-.dark-mode {
-    --sidebar-bg-color: rgba(20, 20, 20, 0.75);
-    --content-bg-color: rgba(30, 30, 30, 0.75);
-    --text-color: #ffffff;
-    --secondary-text-color: #eeeeee;
-    --temp-color: #80cbc4;
-    --time-color: #e0e0e0;
-    --button-bg-color: rgba(60, 60, 60, 0.7);
-    --button-active-color: rgba(100, 100, 100, 0.9);
-    --button-text-color: #ffffff;
-    --util-hover-color: rgba(80, 80, 80, 0.5);
-    --border-color: rgba(255, 255, 255, 0.2);
-}
+// 設定每一天對應的背景主題
+const dayLocations = {
+    day1: 'tokyo',
+    day2: 'nagano',
+    day3: 'nagano',
+    day4: 'tokyo',
+    day5: 'tokyo',
+    day6: 'tokyo',
+    day7: 'tokyo',
+    notes: 'tokyo' 
+};
 
-/* --- 🌟 2. 優雅動畫定義區 🌟 --- */
-
-/* 頁面載入時的整體淡入 */
-@keyframes elegantFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* 卡片切換時的上浮淡入 (更平滑的曲線) */
-@keyframes elegantSlideUp {
-    0% { 
-        opacity: 0; 
-        transform: translateY(30px) scale(0.98); 
+// ====== 2. 行程資料庫 (內容不變) ======
+const itineraryData = {
+    day1: { 
+        date: "1/22 (一)", 
+        tempKey: "day1", 
+        schedule: [
+            { time: "10:30", event: "桃園機場 第二航廈 集合" },
+            { time: "12:35", event: "出發 (華航 CI 104)" },
+            { time: "16:35", event: "抵達成田機場 第二航廈" },
+            { time: "17:30", event: "包車前往住宿" },
+            { time: "18:40", event: "抵達住宿：Super Hotel Tokyo Kameido" },
+            { time: "19:30", event: "晚餐：鳥貴族" },
+            { time: "備註", event: "西友(SEIYU)超市24小時營業。\n**重點：買零食要帶到長野慢慢吃**" }
+        ]
+    },
+    day2: { 
+        date: "1/23 (二)", 
+        tempKey: "day2", 
+        schedule: [
+            { time: "09:00", event: "出發 (起點：Super Hotel)" },
+            { time: "12:30", event: "午餐：湯田中／渋溫泉街散步＋用餐" },
+            { time: "14:30", event: "地獄谷野猿公苑 (門票：800日圓)\n預計停留 1.5 小時" },
+            { time: "16:00", event: "前往飯店 (山路約 25–30 分鐘)" },
+            { time: "16:30", event: "抵達：志賀陽光酒店" },
+            { time: "18:00", event: "飯店晚餐" },
+            { time: "20:00", event: "UNO 大會 (要玩的統一集合)" }
+        ]
+    },
+    day3: { 
+        date: "1/24 (三)", 
+        tempKey: "day3", 
+        schedule: [
+            { time: "ALL DAY", event: "❄️ 滑雪行程 (盡情享受長野粉雪)" },
+            { time: "晚上", event: "自由活動 / 溫泉休息" }
+        ]
+    },
+    day4: { 
+        date: "1/25 (四)", 
+        tempKey: "day4", 
+        schedule: [
+            { time: "早餐", event: "於飯店用餐" },
+            { time: "10:00", event: "退房" },
+            { time: "13:00", event: "集合搭車回東京" },
+            { time: "17:00", event: "抵達住宿：TOKYO GR HOUSE" },
+            { time: "18:00", event: "晴空塔觀光 (建議天望甲板 350m)\n快速逛逛：寶可夢中心、橡果子" },
+            { time: "19:30", event: "晚餐：焼肉きんぐ (燒肉王)" }
+        ]
+    },
+    day5: { 
+        date: "1/26 (五)",
+        tempKey: "day5", 
+        schedule: [
+            { time: "07:30", event: "出門" },
+            { time: "08:00", event: "吃早餐 tomtom吾妻橋 (8點開)" },
+            { time: "09:30", event: "抵達淺草寺" },
+            { time: "10:00", event: "淺草商店街" },
+            { time: "12:00", event: "午餐時間" },
+            { time: "下午", event: "新宿 + 採買伴手禮、藥妝店、3COINS\n(如有時間可回民宿放東西、小休息一下)" },
+            { time: "18:30", event: "晚餐" }
+        ]
+    },
+    day6: { 
+        date: "1/27 (六)", 
+        tempKey: "day6", 
+        schedule: [
+            { time: "10:00", event: "秋葉原 (JUMP SHOP、安麗美特、Radio Kaikan)" },
+            { time: "13:00", event: "秋葉原：女僕餐廳體驗" },
+            { time: "14:00", event: "扭蛋會館 & 自由逛街" },
+            { time: "16:00", event: "上野 Harbs (建議預約)" },
+            { time: "晚餐", event: "阿美橫町 (採購/用餐)" }
+        ]
+    },
+    day7: { 
+        date: "1/28 (日)", 
+        tempKey: "day7", 
+        schedule: [
+            { time: "10:00", event: "完成退房" },
+            { time: "上午", event: "搭車前往成田機場" },
+            { time: "13:25", event: "跟欣柔說掰掰" },
+            { time: "14:35", event: "跟日本說掰掰 (華航 CI105)" },
+            { time: "17:45", event: "抵達桃園國際機場" },
+            { time: "備註", event: "各自回家，隔天開心上班！" }
+        ]
+    },
+    notes: {
+        date: "行前注意事項",
+        tempKey: "notes",
+        isUtility: true,
+        contentHTML: `
+            <li><strong>🥶 衣物：</strong>長野山區非常冷，請務必準備帽子、手套、圍巾。</li>
+            <li><strong>🔌 電源：</strong>日本電壓 100V (扁平兩腳插頭)。</li>
+            <li><strong>📱 網路：</strong>確認 SIM 卡或 WiFi 機是否已準備好。</li>
+            <li><strong>🛂 文件：</strong>護照、VJW (Visit Japan Web) 截圖。</li>
+            <li><strong>💊 藥品：</strong>常備藥、腸胃藥、暈車藥。</li>
+        `
     }
-    100% { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
+};
+
+// ====== 3. 邏輯控制 ======
+
+// 🎯 主題切換功能 (17:01 - 06:59 為夜間模式)
+function setTimeBasedTheme() {
+    const now = new Date();
+    const hour = now.getHours();
+    const isNight = (hour >= 17 && hour <= 23) || (hour >= 0 && hour < 7);
+
+    if (isNight) {
+        document.body.classList.add('dark-mode');
+    } else {
+        document.body.classList.remove('dark-mode');
     }
 }
 
-/* 列表項目的側面滑入瀑布流 */
-@keyframes staggerSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+function showDisplayBlock(targetId) {
+    const displayBlocks = ['itinerary-display', 'notes-display'];
+    displayBlocks.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.remove('active-display');
+            if (id === targetId) {
+                setTimeout(() => {
+                    element.classList.add('active-display');
+                }, 10);
+            }
+        }
+    });
 }
 
-/* 通用動畫類別 */
-.animate-fade-in {
-    animation: elegantFadeIn 1s ease-out forwards;
-}
-
-/* --- 3. 基礎設定與字體 --- */
-body {
-    /* 🌟 修改字體堆疊：優先使用圓體 "M PLUS Rounded 1c" 🌟 */
-    font-family: 'M PLUS Rounded 1c', 'Rubik', 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: var(--text-color);
-    min-height: 100vh;
-    position: relative; 
-    /* 背景圖與文字顏色的平滑過渡 */
-    transition: background-image 0.6s cubic-bezier(0.4, 0.0, 0.2, 1), color 0.6s ease; 
-}
-
-/* 數字與英文標題依然優先使用 Rubik，但後應用圓體 */
-h1, h2, .time-slot, .temperature {
-    font-family: 'Rubik', 'M PLUS Rounded 1c', sans-serif; 
-    letter-spacing: 0.5px; /* 稍微增加字距提升質感 */
-}
-
-/* 背景圖片層 */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; 
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.85); 
-    /* 更柔和的背景切換過渡 */
-    transition: background-image 0.8s cubic-bezier(0.4, 0.0, 0.2, 1); 
-}
-
-/* 動態背景切換類別 */
-body.tokyo-bg { --bg-image: url('images/tokyo-tower-bg.jpg'); }
-body.nagano-bg { --bg-image: url('images/nagano-snow-bg.jpg'); }
-
-.container {
-    display: flex;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    opacity: 0; /* 初始隱藏，由 animate-fade-in 顯示 */
-}
-
-/* --- 4. 側邊欄 (Sidebar) --- */
-.sidebar {
-    position: fixed;
-    top: 0; left: 0; height: 100vh; width: 240px;
-    background-color: var(--sidebar-bg-color);
-    backdrop-filter: blur(10px);
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-    display: flex; flex-direction: column; align-items: center;
-    padding: 20px 0; z-index: 100;
-    transform: translateX(-100%);
-    /* 更平滑的側邊欄滑動 */
-    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
-}
-
-.container.sidebar-open .sidebar { transform: translateX(0); }
-
-/* 按鈕樣式與互動動畫 */
-.nav-button {
-    width: 85%; padding: 12px; margin: 8px 0;
-    border: none; border-radius: 12px; /* 更圓的角 */
-    cursor: pointer; font-size: 16px;
-    /* 按鈕的平滑過渡 */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-family: inherit; /* 繼承圓體 */
-}
-
-.date-button {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    font-weight: 700;
-}
-
-/* 🌟 按鈕懸停動畫：輕微上浮和陰影 */
-.nav-button:hover { 
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.nav-button.active {
-    background-color: var(--button-active-color);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* 激活狀態稍微放大 */
-}
-
-.util-button {
-    background-color: transparent;
-    color: var(--text-color);
-    text-align: left; padding-left: 20px;
-    font-weight: 500;
-}
-.util-button:hover { background-color: var(--util-hover-color); }
-
-.nav-utilities {
-    margin-top: auto; padding-bottom: 20px; width: 100%;
-    border-top: 1px solid var(--border-color); padding-top: 20px;
-}
-
-/* --- 5. 遮罩層與漢堡按鈕 --- */
-.overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--overlay-color); z-index: 90;
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    backdrop-filter: blur(3px);
-}
-.container.sidebar-open ~ .overlay { opacity: 1; visibility: visible; }
-
-.toggle-btn {
-    position: absolute; top: 20px; left: 20px;
-    background: var(--content-bg-color);
-    border: none; border-radius: 50%;
-    width: 45px; height: 45px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 80; color: var(--text-color);
-    backdrop-filter: blur(5px);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-.toggle-btn:hover { transform: scale(1.1); }
-
-/* --- 6. 主要內容區 --- */
-.content-area {
-    flex-grow: 1; padding: 20px;
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center; width: 100%; padding-top: 60px; z-index: 1; 
-}
-
-.content-area header {
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-    /* 標題也加入輕微的進場動畫 */
-    animation: elegantSlideUp 0.8s ease-out 0.2s backwards;
-}
-
-.content-area h1 { font-size: 32px; margin-bottom: 8px; color: var(--header-text-color); font-weight: 700; }
-.content-area h2 { font-size: 22px; font-weight: 500; margin-top: 0; opacity: 0.9; color: var(--header-text-color); }
-
-/* --- 7. 行程顯示區塊 (卡片) --- */
-.display-box {
-    width: 95%; max-width: 600px; min-height: 400px;
-    padding: 30px;
-    border-radius: 24px; /* 更圓潤的卡片 */
-    background-color: var(--content-bg-color);
-    backdrop-filter: blur(12px); 
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    text-align: left; color: var(--text-color);
-    border: 1px solid var(--border-color);
-    transition: background-color 0.5s ease, height 0.3s ease;
-    display: none;
-    /* 確保子元素的 3D 變換效果 */
-    transform-style: preserve-3d;
-    perspective: 1000px;
-}
-
-/* 🌟 卡片切換時的動畫應用 🌟 */
-.display-box.active-display {
-    display: block;
-    /* 應用新的優雅上浮動畫 */
-    animation: elegantSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.display-box h3 {
-    font-size: 26px; border-bottom: 2px solid var(--button-active-color);
-    padding-bottom: 15px; margin-bottom: 25px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: 700;
-}
-
-.temperature {
-    font-size: 16px; font-weight: 700; color: var(--temp-color);
-    display: inline-block; padding: 8px 15px;
-    background-color: var(--button-bg-color); border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-/* --- 8. 行程列表與瀑布流動畫 --- */
-.schedule-list { list-style: none; padding: 0; }
-
-.schedule-list li {
-    display: flex; margin-bottom: 15px; padding: 15px;
-    background-color: var(--button-bg-color);
-    border-radius: 16px;
-    border-left: 5px solid var(--temp-color);
-    /* 列表項互動動畫 */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+function setBackground(locationKey) {
+    document.body.classList.remove('tokyo-bg', 'nagano-bg');
     
-    /* 🌟 瀑布流動畫初始狀態：透明且位置偏移 🌟 */
-    opacity: 0;
-    /* 應用 JS 設定的延遲動畫 */
-    animation: staggerSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* 列表項懸停效果 */
-.schedule-list li:hover { 
-    transform: translateX(8px) scale(1.01); 
-    background-color: var(--button-active-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.time-slot { 
-    font-weight: 700; width: 100px; flex-shrink: 0; color: var(--time-color);
-    font-size: 18px; display: flex; align-items: center;
-}
-
-.event-details { 
-    flex-grow: 1; padding-left: 20px; line-height: 1.7; 
-    border-left: 2px solid var(--border-color);
-    font-weight: 500;
-}
-
-/* 注意事項列表 */
-#notes-content { list-style: none; padding-left: 10px; }
-#notes-content li {
-    background-color: transparent; border-left: none; box-shadow: none;
-    margin-bottom: 15px; padding: 10px;
-    display: flex; align-items: flex-start;
-    /* 同樣應用瀑布流動畫 */
-    opacity: 0;
-    animation: staggerSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* 桌面版適應 */
-@media (min-width: 768px) {
-    .toggle-btn { display: none; }
-    .content-area { padding-top: 40px; }
-    .sidebar {
-        position: static; transform: translateX(0);
-        height: auto; min-height: 100vh;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        background-color: var(--sidebar-bg-color);
+    if (locationKey === 'tokyo') {
+        document.body.classList.add('tokyo-bg');
+    } else if (locationKey === 'nagano') {
+        document.body.classList.add('nagano-bg');
     }
-    .overlay { display: none; }
 }
+
+// 渲染行程列表
+function renderItinerary(data, dayKey) {
+    // 🌟 在切換顯示區塊前，先設定背景 🌟
+    setBackground(dayLocations[dayKey]);
+    showDisplayBlock('itinerary-display');
+
+    const titleElement = document.getElementById('itinerary-title');
+    const listElement = document.getElementById('schedule-list');
+    
+    const currentTemp = updatedTemperatures[data.tempKey] || "";
+    titleElement.innerHTML = `
+        ${data.date}
+        ${currentTemp ? `<span class="temperature">${currentTemp}</span>` : ''}
+    `;
+
+    let scheduleHTML = '';
+    data.schedule.forEach((item, index) => {
+        const eventDetails = item.event.replace(/\n/g, '<br>');
+        scheduleHTML += `
+            <li class="anim-item" style="animation-delay: ${index * 0.08}s">
+                <span class="time-slot">${item.time}</span>
+                <span class="event-details">${eventDetails}</span>
+            </li>
+        `;
+    });
+    listElement.innerHTML = scheduleHTML;
+}
+
+// 🎯 修正後的 renderUtility 函式
+function renderUtility(data, key) {
+    // 🌟 確保背景被設定為東京 (notes對應tokyo) 🌟
+    setBackground('tokyo'); 
+    showDisplayBlock('notes-display');
+    
+    const notesTitle = document.getElementById('notes-title');
+    const notesContent = document.getElementById('notes-content');
+    
+    notesTitle.innerHTML = `⚠️ ${data.date}`;
+    
+    // 渲染並加上動畫延遲
+    let notesHTML = '';
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = data.contentHTML;
+    const listItems = tempDiv.querySelectorAll('li');
+    
+    listItems.forEach((li, index) => {
+         notesHTML += `<li class="anim-item" style="animation-delay: ${index * 0.08}s">${li.innerHTML}</li>`;
+    });
+    
+    if(listItems.length === 0) {
+        notesHTML = data.contentHTML;
+    }
+    
+    notesContent.innerHTML = notesHTML;
+}
+
+// 按鈕點擊處理
+function handleButtonClick(dayKey, buttonElement) {
+    const content = itineraryData[dayKey];
+    if (!content) return;
+
+    document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+    buttonElement.classList.add('active');
+
+    if (dayKey === 'notes') {
+        renderUtility(content, dayKey);
+    } else {
+        renderItinerary(content, dayKey);
+    }
+
+    const container = document.querySelector('.container');
+    if (window.innerWidth < 768) {
+        container.classList.remove('sidebar-open');
+    }
+}
+
+// 初始化
+document.addEventListener('DOMContentLoaded', () => {
+    const dateNav = document.getElementById('date-navigation');
+    const utilNav = document.getElementById('utility-navigation');
+    const menuToggle = document.getElementById('menu-toggle');
+    const container = document.querySelector('.container');
+    const overlay = document.getElementById('overlay');
+
+    // 🎯 1. 執行時間主題切換
+    setTimeBasedTheme();
+    // 初始載入時，將 body 設為預設東京背景
+    setBackground('tokyo');
+
+    // 生成按鈕
+    Object.keys(itineraryData).forEach(key => {
+        const data = itineraryData[key];
+        const button = document.createElement('button');
+        button.classList.add('nav-button');
+        button.setAttribute('data-key', key);
+        
+        if (key.startsWith('day')) {
+            button.classList.add('date-button');
+            button.textContent = data.date.split(' ')[0]; // 只顯示日期
+            dateNav.appendChild(button);
+        } else if (key === 'notes') {
+            button.classList.add('util-button');
+            button.textContent = '⚠️ 注意事項';
+            utilNav.appendChild(button);
+        }
+
+        button.addEventListener('click', function() {
+            handleButtonClick(key, this);
+        });
+    });
+
+    // 側邊欄切換邏輯
+    function toggleSidebar() {
+        container.classList.toggle('sidebar-open');
+    }
+
+    menuToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', toggleSidebar); 
+
+    // 預設載入 Day 1
+    const defaultButton = document.querySelector('.date-button[data-key="day1"]');
+    if (defaultButton) {
+        handleButtonClick('day1', defaultButton);
+    }
+});
