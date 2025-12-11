@@ -1,313 +1,361 @@
-/* style.css (最終版：圓體字型、全域優雅動畫、動態背景) */
+/* style.css - 整合所有修正：字卡底色、手機置中、固定背景 */
 
-/* --- 1. CSS 變數定義 --- */
+/* --------------------------------------
+ * 1. 基本設定 (字體、版面、顏色變數)
+ * -------------------------------------- */
+
 :root {
-    --bg-image: url('images/tokyo-night-bg.jpg');
-    /* Light Mode 顏色 */
-    --sidebar-bg-color: rgba(255, 255, 255, 0.75);
-    --content-bg-color: rgba(255, 255, 255, 0.75);
-    --text-color: #222222;
-    --secondary-text-color: #333333;
-    --temp-color: #00695c;
-    --time-color: #222222;
-    --button-bg-color: rgba(255, 255, 255, 0.6);
-    --button-active-color: rgba(255, 255, 255, 0.9);
-    --button-text-color: #222222;
-    --util-hover-color: rgba(240, 240, 240, 0.6);
-    --border-color: rgba(100, 100, 100, 0.3);
-    --overlay-color: rgba(0, 0, 0, 0.6);
-    --header-text-color: #ffffff; 
+    --main-font: 'M PLUS Rounded 1c', sans-serif;
+    --color-primary: #f7f7f7;
+    --color-secondary: #0a0a0a;
+    --color-text: #0a0a0a; /* 淺色模式下，主文字為深色 */
+    --color-text-light: #555;
+    
+    /* 🌟 行程卡片底色 (深色半透明) - 根據您提供的圖片樣式調整 🌟 */
+    --color-card-bg: rgba(0, 0, 0, 0.7); 
+    --color-accent: #007bff; 
+    --color-temp-hot: #e74c3c;
+    --color-temp-cold: #3498db;
+    --bg-image: url('images/tokyo-tower-bg.jpg'); 
 }
 
-/* Dark Mode (夜間模式) */
-.dark-mode {
-    --sidebar-bg-color: rgba(20, 20, 20, 0.75);
-    --content-bg-color: rgba(30, 30, 30, 0.75);
-    --text-color: #ffffff;
-    --secondary-text-color: #eeeeee;
-    --temp-color: #80cbc4;
-    --time-color: #e0e0e0;
-    --button-bg-color: rgba(60, 60, 60, 0.7);
-    --button-active-color: rgba(100, 100, 100, 0.9);
-    --button-text-color: #ffffff;
-    --util-hover-color: rgba(80, 80, 80, 0.5);
-    --border-color: rgba(255, 255, 255, 0.2);
+/* 暗黑模式變數 */
+body.dark-mode {
+    --color-primary: #1e1e1e;
+    --color-secondary: #f0f0f0;
+    --color-text: #f0f0f0; /* 暗黑模式下，主文字為亮色 */
+    --color-text-light: #bbb;
+    
+    /* 🌟 暗黑模式下，行程卡片底色可以維持深色，或者更換 🌟 */
+    --color-card-bg: rgba(30, 30, 30, 0.8);
 }
 
-/* --- 🌟 2. 優雅動畫定義區 🌟 --- */
+/* --------------------------------------
+ * 2. 全域樣式與背景
+ * -------------------------------------- */
 
-/* 頁面載入時的整體淡入 */
-@keyframes elegantFadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* 卡片切換時的上浮淡入 (更平滑的曲線) */
-@keyframes elegantSlideUp {
-    0% { 
-        opacity: 0; 
-        transform: translateY(30px) scale(0.98); 
-    }
-    100% { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
-    }
-}
-
-/* 列表項目的側面滑入瀑布流 */
-@keyframes staggerSlideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* 通用動畫類別 */
-.animate-fade-in {
-    animation: elegantFadeIn 1s ease-out forwards;
-}
-
-/* --- 3. 基礎設定與字體 --- */
-body {
-    /* 🌟 修改字體堆疊：優先使用圓體 "M PLUS Rounded 1c" 🌟 */
-    font-family: 'M PLUS Rounded 1c', 'Rubik', 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    color: var(--text-color);
+}
+
+body {
+    font-family: var(--main-font);
+    color: var(--color-text);
     min-height: 100vh;
-    position: relative; 
-    /* 背景圖與文字顏色的平滑過渡 */
-    transition: background-image 0.6s cubic-bezier(0.4, 0.0, 0.2, 1), color 0.6s ease; 
-}
-
-/* 數字與英文標題依然優先使用 Rubik，但後應用圓體 */
-h1, h2, .time-slot, .temperature {
-    font-family: 'Rubik', 'M PLUS Rounded 1c', sans-serif; 
-    letter-spacing: 0.5px; /* 稍微增加字距提升質感 */
-}
-
-/* 背景圖片層 */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; 
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
+    background-color: var(--color-primary); 
+    background-image: var(--bg-image); 
+    background-attachment: fixed; /* 圖片固定 */
+    background-size: cover;           
     background-repeat: no-repeat;
-    filter: brightness(0.85); 
-    /* 更柔和的背景切換過渡 */
-    transition: background-image 0.8s cubic-bezier(0.4, 0.0, 0.2, 1); 
+    background-position: center;      
+    transition: background-image 0.8s ease-in-out, background-color 0.5s;
 }
 
-/* 動態背景切換類別 */
-body.tokyo-bg { --bg-image: url('images/tokyo-tower-bg.jpg'); }
-body.nagano-bg { --bg-image: url('images/nagano-snow-bg.jpg'); }
+/* --------------------------------------
+ * 3. 動態背景設定 (只設定圖片路徑)
+ * -------------------------------------- */
+
+body.tokyo-bg {
+    --bg-image: url('images/tokyo-tower-bg.jpg'); 
+}
+
+body.nagano-bg {
+    --bg-image: url('images/nagano-snow-bg.jpg');
+}
+
+/* --------------------------------------
+ * 4. 佈局容器 (Container)
+ * -------------------------------------- */
 
 .container {
     display: flex;
     min-height: 100vh;
-    position: relative;
     overflow-x: hidden;
-    opacity: 0; /* 初始隱藏，由 animate-fade-in 顯示 */
+    position: relative; 
 }
 
-/* --- 4. 側邊欄 (Sidebar) --- */
+/* --------------------------------------
+ * 5. 側邊欄 (Sidebar) - 行動裝置選單
+ * -------------------------------------- */
+
 .sidebar {
-    position: fixed;
-    top: 0; left: 0; height: 100vh; width: 240px;
-    background-color: var(--sidebar-bg-color);
-    backdrop-filter: blur(10px);
-    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
-    display: flex; flex-direction: column; align-items: center;
-    padding: 20px 0; z-index: 100;
+    width: 280px; 
+    background-color: rgba(0, 0, 0, 0.9); /* 調整為更深色，確保按鈕清晰 */
+    z-index: 1000;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    height: 100vh; 
+    overflow-y: auto; 
     transform: translateX(-100%);
-    /* 更平滑的側邊欄滑動 */
-    transition: transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: transform 0.3s ease-out;
+    padding: 20px;
+    padding-top: 80px; 
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.8); /* 陰影更明顯 */
 }
 
-.container.sidebar-open .sidebar { transform: translateX(0); }
+.container.sidebar-open .sidebar {
+    transform: translateX(0);
+}
 
-/* 按鈕樣式與互動動畫 */
+/* --------------------------------------
+ * 6. 主內容區 (Content Area)
+ * -------------------------------------- */
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    padding-left: 300px; /* 桌面版側邊欄空間 */
+    transition: padding-left 0.3s;
+    min-width: 0; 
+}
+
+/* --------------------------------------
+ * 7. 導航按鈕樣式
+ * -------------------------------------- */
+
+#date-navigation, #utility-navigation {
+    margin-bottom: 25px;
+}
+
 .nav-button {
-    width: 85%; padding: 12px; margin: 8px 0;
-    border: none; border-radius: 12px; /* 更圓的角 */
-    cursor: pointer; font-size: 16px;
-    /* 按鈕的平滑過渡 */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-family: inherit; /* 繼承圓體 */
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.1); /* 側邊欄按鈕保持白色半透明 */
+    color: white; 
+    border: none;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
-.date-button {
-    background-color: var(--button-bg-color);
-    color: var(--button-text-color);
-    font-weight: 700;
-}
-
-/* 🌟 按鈕懸停動畫：輕微上浮和陰影 */
-.nav-button:hover { 
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.nav-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .nav-button.active {
-    background-color: var(--button-active-color);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02); /* 激活狀態稍微放大 */
+    background-color: var(--color-accent);
+    color: white;
+    font-weight: bold;
+    transform: scale(1.02);
 }
 
-.util-button {
-    background-color: transparent;
-    color: var(--text-color);
-    text-align: left; padding-left: 20px;
-    font-weight: 500;
-}
-.util-button:hover { background-color: var(--util-hover-color); }
-
-.nav-utilities {
-    margin-top: auto; padding-bottom: 20px; width: 100%;
-    border-top: 1px solid var(--border-color); padding-top: 20px;
-}
-
-/* --- 5. 遮罩層與漢堡按鈕 --- */
-.overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--overlay-color); z-index: 90;
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
-    backdrop-filter: blur(3px);
-}
-.container.sidebar-open ~ .overlay { opacity: 1; visibility: visible; }
-
-.toggle-btn {
-    position: absolute; top: 20px; left: 20px;
-    background: var(--content-bg-color);
-    border: none; border-radius: 50%;
-    width: 45px; height: 45px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    z-index: 80; color: var(--text-color);
-    backdrop-filter: blur(5px);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-}
-.toggle-btn:hover { transform: scale(1.1); }
-
-/* --- 6. 主要內容區 --- */
-.content-area {
-    flex-grow: 1; padding: 20px;
-    display: flex; flex-direction: column; align-items: center;
-    text-align: center; width: 100%; padding-top: 60px; z-index: 1; 
+/* --------------------------------------
+ * 8. ⚠️ 注意事項按鈕專屬樣式 (Utility Button)
+ * -------------------------------------- */
+/* 保持高對比度 */
+#utility-navigation .nav-button {
+    margin-top: 20px; 
+    background-color: #ffda79; 
+    color: #333; 
+    font-weight: bold;
+    backdrop-filter: none; 
+    -webkit-backdrop-filter: none;
 }
 
-.content-area header {
-    margin-bottom: 25px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-    /* 標題也加入輕微的進場動畫 */
-    animation: elegantSlideUp 0.8s ease-out 0.2s backwards;
-}
 
-.content-area h1 { font-size: 32px; margin-bottom: 8px; color: var(--header-text-color); font-weight: 700; }
-.content-area h2 { font-size: 22px; font-weight: 500; margin-top: 0; opacity: 0.9; color: var(--header-text-color); }
+/* --------------------------------------
+ * 9. 行程顯示卡片樣式
+ * -------------------------------------- */
 
-/* --- 7. 行程顯示區塊 (卡片) --- */
-.display-box {
-    width: 95%; max-width: 600px; min-height: 400px;
+.itinerary-display, .notes-display {
+    max-width: 800px;
+    margin: 0 auto;
+    
+    /* 🌟 行程主卡片：維持深色半透明背景 🌟 */
+    background-color: rgba(0, 0, 0, 0.4); 
+    
     padding: 30px;
-    border-radius: 24px; /* 更圓潤的卡片 */
-    background-color: var(--content-bg-color);
-    backdrop-filter: blur(12px); 
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    text-align: left; color: var(--text-color);
-    border: 1px solid var(--border-color);
-    transition: background-color 0.5s ease, height 0.3s ease;
-    display: none;
-    /* 確保子元素的 3D 變換效果 */
-    transform-style: preserve-3d;
-    perspective: 1000px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px); /* 輕微模糊背景 */
+    -webkit-backdrop-filter: blur(8px);
+    
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+    
+    /* 🌟 修正卡片內的文字顏色 🌟 */
+    color: white; 
 }
 
-/* 🌟 卡片切換時的動畫應用 🌟 */
-.display-box.active-display {
-    display: block;
-    /* 應用新的優雅上浮動畫 */
-    animation: elegantSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+.itinerary-display.active-display, .notes-display.active-display {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.display-box h3 {
-    font-size: 26px; border-bottom: 2px solid var(--button-active-color);
-    padding-bottom: 15px; margin-bottom: 25px;
-    display: flex; justify-content: space-between; align-items: center;
-    font-weight: 700;
+/* --------------------------------------
+ * 10. 標題與溫度
+ * -------------------------------------- */
+
+h1#itinerary-title, #notes-title {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--color-accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white; /* 確保標題在深色卡片內為白色 */
+}
+
+/* 調整卡片內的日期標題顏色 */
+.itinerary-display h2 {
+    color: white;
 }
 
 .temperature {
-    font-size: 16px; font-weight: 700; color: var(--temp-color);
-    display: inline-block; padding: 8px 15px;
-    background-color: var(--button-bg-color); border-radius: 20px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-size: 0.7em;
+    font-weight: normal;
+    background-color: var(--color-temp-cold);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 15px;
+    white-space: nowrap;
 }
 
-/* --- 8. 行程列表與瀑布流動畫 --- */
-.schedule-list { list-style: none; padding: 0; }
+/* --------------------------------------
+ * 11. 行程列表與動畫 (核心字卡設計)
+ * -------------------------------------- */
 
-.schedule-list li {
-    display: flex; margin-bottom: 15px; padding: 15px;
-    background-color: var(--button-bg-color);
-    border-radius: 16px;
-    border-left: 5px solid var(--temp-color);
-    /* 列表項互動動畫 */
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+#schedule-list, #notes-content {
+    list-style: none;
+    padding: 0;
+}
+
+#schedule-list li, #notes-content li {
+    display: flex;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 4px solid var(--color-accent);
+    position: relative;
     
-    /* 🌟 瀑布流動畫初始狀態：透明且位置偏移 🌟 */
-    opacity: 0;
-    /* 應用 JS 設定的延遲動畫 */
-    animation: staggerSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    /* 🌟 讓列表項目內容垂直置中 🌟 */
+    align-items: center; 
 }
 
-/* 列表項懸停效果 */
-.schedule-list li:hover { 
-    transform: translateX(8px) scale(1.01); 
-    background-color: var(--button-active-color);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+.time-slot {
+    font-weight: bold;
+    min-width: 90px;
+    color: var(--color-accent);
+    font-size: 1.1em;
 }
 
-.time-slot { 
-    font-weight: 700; width: 100px; flex-shrink: 0; color: var(--time-color);
-    font-size: 18px; display: flex; align-items: center;
+.event-details {
+    flex-grow: 1;
+    padding-left: 15px;
+    
+    /* 🌟 字卡底色：使用預設的深色半透明 🌟 */
+    background-color: var(--color-card-bg); 
+    padding: 12px 18px; /* 增加內邊距 */
+    border-radius: 8px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+    /* 🌟 調整行程內容文字顏色為亮色 🌟 */
+    color: var(--color-secondary); /* 淺色模式下 text-light 可能是淺色，所以用次要顏色(深色) */
+    color: white; /* 由於行程卡片背景是深色的，文字需要強制為白色 */
 }
 
-.event-details { 
-    flex-grow: 1; padding-left: 20px; line-height: 1.7; 
-    border-left: 2px solid var(--border-color);
-    font-weight: 500;
-}
+/* --------------------------------------
+ * 12. 瀑布流動畫 (Staggered Animation)
+ * -------------------------------------- */
 
-/* 注意事項列表 */
-#notes-content { list-style: none; padding-left: 10px; }
-#notes-content li {
-    background-color: transparent; border-left: none; box-shadow: none;
-    margin-bottom: 15px; padding: 10px;
-    display: flex; align-items: flex-start;
-    /* 同樣應用瀑布流動畫 */
-    opacity: 0;
-    animation: staggerSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* 桌面版適應 */
-@media (min-width: 768px) {
-    .toggle-btn { display: none; }
-    .content-area { padding-top: 40px; }
-    .sidebar {
-        position: static; transform: translateX(0);
-        height: auto; min-height: 100vh;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-        background-color: var(--sidebar-bg-color);
+@keyframes staggerSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
     }
-    .overlay { display: none; }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.anim-item {
+    opacity: 0;
+    animation: staggerSlideIn 0.4s ease-out forwards;
+}
+
+/* --------------------------------------
+ * 13. 行動裝置和響應式設計
+ * -------------------------------------- */
+
+/* 覆蓋層 (Overlay) */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.container.sidebar-open #overlay {
+    display: block;
+}
+
+/* 行動裝置樣式 (小於 768px) */
+@media (max-width: 768px) {
+    
+    /* 1. 主內容區修正 (Content Area) */
+    .main-content {
+        /* 🌟 核心修正：移除桌面版偏移，讓內容靠左，為頂部按鈕留出空間 🌟 */
+        padding-left: 20px; 
+        padding-right: 20px; 
+        padding-top: 80px; 
+        
+        /* 🌟 新增：確保內容區塊位於螢幕中央 🌟 */
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    /* 2. 漢堡選單按鈕 (#menu-toggle) 修正 */
+    #menu-toggle {
+        display: block;
+        position: fixed; 
+        top: 20px;
+        left: 20px;
+        z-index: 1002; 
+        
+        font-size: 1.5em;
+        /* 🌟 按鈕使用深色背景，確保在任何背景圖片上都清晰 🌟 */
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* 3. 頂部標題置中修正 (解決被擠壓問題) */
+    /* 確保所有頂部標題和文字都能在手機上正確置中 */
+    h1, h2, p {  
+        text-align: center; 
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+    
+    /* 4. 行程卡片：調整邊距以適應手機螢幕 */
+    .itinerary-display, .notes-display {
+        padding: 20px;
+    }
+}
+
+/* 桌面版隱藏選單按鈕 */
+@media (min-width: 769px) {
+    #menu-toggle {
+        display: none;
+    }
 }
