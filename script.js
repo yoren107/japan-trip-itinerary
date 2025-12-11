@@ -118,9 +118,6 @@ const itineraryData = {
             <li><strong> 文件：</strong>護照、VJW (Visit Japan Web) 截圖。</li>
             <li><strong> 藥品：</strong>常備藥、腸胃藥、暈車藥。</li>
             <li><strong> 車費：包車一人29,300/日圓，在機場時統一收日圓。</li>
-        `
-    },
-    notes: {
         date: "住宿資料",
         tempKey: "notes",
         isUtility: true,
@@ -301,4 +298,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
