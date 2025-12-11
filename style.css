@@ -1,4 +1,4 @@
-/* style.css - 整合所有修正：字卡底色、手機置中、固定背景 */
+/* style.css - 最終修正版：深色字卡設計，行動版排版修正 */
 
 /* --------------------------------------
  * 1. 基本設定 (字體、版面、顏色變數)
@@ -8,25 +8,24 @@
     --main-font: 'M PLUS Rounded 1c', sans-serif;
     --color-primary: #f7f7f7;
     --color-secondary: #0a0a0a;
-    --color-text: #0a0a0a; /* 淺色模式下，主文字為深色 */
+    --color-text: #0a0a0a; 
     --color-text-light: #555;
     
-    /* 🌟 行程卡片底色 (深色半透明) - 根據您提供的圖片樣式調整 🌟 */
+    /* 🌟 行程卡片/字卡底色：深色半透明 🌟 */
     --color-card-bg: rgba(0, 0, 0, 0.7); 
     --color-accent: #007bff; 
     --color-temp-hot: #e74c3c;
     --color-temp-cold: #3498db;
     --bg-image: url('images/tokyo-tower-bg.jpg'); 
+    --color-white: #ffffff; /* 新增白色變數，方便統一管理亮色文字 */
 }
 
 /* 暗黑模式變數 */
 body.dark-mode {
     --color-primary: #1e1e1e;
     --color-secondary: #f0f0f0;
-    --color-text: #f0f0f0; /* 暗黑模式下，主文字為亮色 */
+    --color-text: #f0f0f0; 
     --color-text-light: #bbb;
-    
-    /* 🌟 暗黑模式下，行程卡片底色可以維持深色，或者更換 🌟 */
     --color-card-bg: rgba(30, 30, 30, 0.8);
 }
 
@@ -46,7 +45,7 @@ body {
     min-height: 100vh;
     background-color: var(--color-primary); 
     background-image: var(--bg-image); 
-    background-attachment: fixed; /* 圖片固定 */
+    background-attachment: fixed; 
     background-size: cover;           
     background-repeat: no-repeat;
     background-position: center;      
@@ -77,12 +76,12 @@ body.nagano-bg {
 }
 
 /* --------------------------------------
- * 5. 側邊欄 (Sidebar) - 行動裝置選單
+ * 5. 側邊欄 (Sidebar)
  * -------------------------------------- */
 
 .sidebar {
     width: 280px; 
-    background-color: rgba(0, 0, 0, 0.9); /* 調整為更深色，確保按鈕清晰 */
+    background-color: rgba(0, 0, 0, 0.9); /* 保持深色透明 */
     z-index: 1000;
     position: fixed; 
     top: 0; 
@@ -93,7 +92,7 @@ body.nagano-bg {
     transition: transform 0.3s ease-out;
     padding: 20px;
     padding-top: 80px; 
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.8); /* 陰影更明顯 */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.8); 
 }
 
 .container.sidebar-open .sidebar {
@@ -113,7 +112,7 @@ body.nagano-bg {
 }
 
 /* --------------------------------------
- * 7. 導航按鈕樣式
+ * 7. 導航按鈕樣式 (側邊欄按鈕)
  * -------------------------------------- */
 
 #date-navigation, #utility-navigation {
@@ -125,8 +124,8 @@ body.nagano-bg {
     width: 100%;
     padding: 15px 20px;
     margin-bottom: 10px;
-    background-color: rgba(255, 255, 255, 0.1); /* 側邊欄按鈕保持白色半透明 */
-    color: white; 
+    background-color: rgba(255, 255, 255, 0.1); 
+    color: var(--color-white); /* 側邊欄按鈕文字為白色 */
     border: none;
     border-radius: 10px;
     text-align: left;
@@ -143,15 +142,15 @@ body.nagano-bg {
 
 .nav-button.active {
     background-color: var(--color-accent);
-    color: white;
+    color: var(--color-white);
     font-weight: bold;
     transform: scale(1.02);
 }
 
 /* --------------------------------------
- * 8. ⚠️ 注意事項按鈕專屬樣式 (Utility Button)
+ * 8. ⚠️ 注意事項按鈕專屬樣式 
  * -------------------------------------- */
-/* 保持高對比度 */
+
 #utility-navigation .nav-button {
     margin-top: 20px; 
     background-color: #ffda79; 
@@ -163,28 +162,28 @@ body.nagano-bg {
 
 
 /* --------------------------------------
- * 9. 行程顯示卡片樣式
+ * 9. 行程顯示卡片樣式 (大塊底色)
  * -------------------------------------- */
 
 .itinerary-display, .notes-display {
     max-width: 800px;
     margin: 0 auto;
     
-    /* 🌟 行程主卡片：維持深色半透明背景 🌟 */
+    /* 🌟 行程主卡片：深色半透明大底色 🌟 */
     background-color: rgba(0, 0, 0, 0.4); 
     
     padding: 30px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px); /* 輕微模糊背景 */
+    backdrop-filter: blur(8px); 
     -webkit-backdrop-filter: blur(8px);
     
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 0.5s, transform 0.5s;
     
-    /* 🌟 修正卡片內的文字顏色 🌟 */
-    color: white; 
+    /* 確保卡片內文字為亮色 */
+    color: var(--color-white); 
 }
 
 .itinerary-display.active-display, .notes-display.active-display {
@@ -193,7 +192,7 @@ body.nagano-bg {
 }
 
 /* --------------------------------------
- * 10. 標題與溫度
+ * 10. 標題與溫度 (卡片內的標題)
  * -------------------------------------- */
 
 h1#itinerary-title, #notes-title {
@@ -204,19 +203,14 @@ h1#itinerary-title, #notes-title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white; /* 確保標題在深色卡片內為白色 */
-}
-
-/* 調整卡片內的日期標題顏色 */
-.itinerary-display h2 {
-    color: white;
+    color: var(--color-white); /* 標題文字為白色 */
 }
 
 .temperature {
     font-size: 0.7em;
     font-weight: normal;
     background-color: var(--color-temp-cold);
-    color: white;
+    color: var(--color-white);
     padding: 5px 10px;
     border-radius: 5px;
     margin-left: 15px;
@@ -224,7 +218,7 @@ h1#itinerary-title, #notes-title {
 }
 
 /* --------------------------------------
- * 11. 行程列表與動畫 (核心字卡設計)
+ * 11. 行程列表與動畫 (長條字卡設計)
  * -------------------------------------- */
 
 #schedule-list, #notes-content {
@@ -238,8 +232,6 @@ h1#itinerary-title, #notes-title {
     padding-left: 15px;
     border-left: 4px solid var(--color-accent);
     position: relative;
-    
-    /* 🌟 讓列表項目內容垂直置中 🌟 */
     align-items: center; 
 }
 
@@ -254,16 +246,25 @@ h1#itinerary-title, #notes-title {
     flex-grow: 1;
     padding-left: 15px;
     
-    /* 🌟 字卡底色：使用預設的深色半透明 🌟 */
+    /* 🌟 行程項目字卡底色：深色半透明 🌟 */
     background-color: var(--color-card-bg); 
-    padding: 12px 18px; /* 增加內邊距 */
+    padding: 12px 18px; 
     border-radius: 8px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     
-    /* 🌟 調整行程內容文字顏色為亮色 🌟 */
-    color: var(--color-secondary); /* 淺色模式下 text-light 可能是淺色，所以用次要顏色(深色) */
-    color: white; /* 由於行程卡片背景是深色的，文字需要強制為白色 */
+    /* 🌟 行程內容文字顏色：白色 🌟 */
+    color: var(--color-white); 
 }
+
+/* 確保夜間模式下，字卡底色和文字仍然保持高對比度 */
+body.dark-mode .itinerary-display, 
+body.dark-mode .notes-display,
+body.dark-mode .event-details {
+    /* 即使在 dark-mode，卡片也維持深色，但可以選擇更淺一點的透明度 */
+    background-color: rgba(30, 30, 30, 0.8); 
+    color: var(--color-text); /* dark-mode 的 --color-text 是亮色/白色 */
+}
+
 
 /* --------------------------------------
  * 12. 瀑布流動畫 (Staggered Animation)
@@ -286,7 +287,7 @@ h1#itinerary-title, #notes-title {
 }
 
 /* --------------------------------------
- * 13. 行動裝置和響應式設計
+ * 13. 行動裝置和響應式設計 (確保手機版置中)
  * -------------------------------------- */
 
 /* 覆蓋層 (Overlay) */
@@ -310,12 +311,12 @@ h1#itinerary-title, #notes-title {
     
     /* 1. 主內容區修正 (Content Area) */
     .main-content {
-        /* 🌟 核心修正：移除桌面版偏移，讓內容靠左，為頂部按鈕留出空間 🌟 */
+        /* 移除桌面版偏移，並為頂部按鈕留出空間 */
         padding-left: 20px; 
         padding-right: 20px; 
         padding-top: 80px; 
         
-        /* 🌟 新增：確保內容區塊位於螢幕中央 🌟 */
+        /* 確保內容區塊置中 */
         margin: 0 auto;
         width: 100%;
     }
@@ -329,16 +330,16 @@ h1#itinerary-title, #notes-title {
         z-index: 1002; 
         
         font-size: 1.5em;
-        /* 🌟 按鈕使用深色背景，確保在任何背景圖片上都清晰 🌟 */
+        /* 保持深色背景，確保高對比度 */
         background: rgba(0, 0, 0, 0.7);
-        color: white;
+        color: var(--color-white);
         padding: 5px 10px;
         border-radius: 5px;
         border: none;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
 
-    /* 3. 頂部標題置中修正 (解決被擠壓問題) */
+    /* 3. 頂部標題置中修正 */
     /* 確保所有頂部標題和文字都能在手機上正確置中 */
     h1, h2, p {  
         text-align: center; 
