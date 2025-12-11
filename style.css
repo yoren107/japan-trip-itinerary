@@ -114,8 +114,7 @@ body.nagano-bg {
     padding: 20px;
     padding-top: 80px; /* 給頂部選單按鈕留出空間 */
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-    /* 為了在黑色背景上更明顯，建議將陰影顏色調淡 */
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+ 
 }
 
 .container.sidebar-open .sidebar {
@@ -356,6 +355,7 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
 
 
