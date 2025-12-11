@@ -91,7 +91,9 @@ body.nagano-bg {
 
 .sidebar {
     width: 280px; 
+    /* 🌟 核心修正：將底色設為黑色 (0, 0, 0)，透明度 60% (0.6) 🌟 */
     background-color: rgba(0, 0, 0, 0.6); 
+    
     z-index: 1000;
     
     /* 核心修正：將定位屬性設為固定，確保選單不隨內容捲動 */
@@ -112,6 +114,8 @@ body.nagano-bg {
     padding: 20px;
     padding-top: 80px; /* 給頂部選單按鈕留出空間 */
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    /* 為了在黑色背景上更明顯，建議將陰影顏色調淡 */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .container.sidebar-open .sidebar {
@@ -352,5 +356,6 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
 
