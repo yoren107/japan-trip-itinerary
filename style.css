@@ -91,30 +91,29 @@ h1, h2, .time-slot, .temperature {
 }
 
 /* 背景圖片層 */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    z-index: -1; 
-    background-image: var(--bg-image);
-    background-size: cover;
-    background-position: center;
+/* style.css */
+
+body {
+    /* 確保 body 佔滿整個視窗 */
+    min-height: 100vh; 
+    
+    /* 圖片來源：使用變數 --bg-image */
+    background-image: var(--bg-image); 
+    
+    /* 🌟 修正重點 1: 讓圖片固定在視窗，不隨內容捲動 🌟 */
+    background-attachment: fixed;
+    
+    /* 🌟 修正重點 2: 圖片不要重複 🌟 */
     background-repeat: no-repeat;
-    filter: brightness(0.85); 
-    /* 更柔和的背景切換過渡 */
-    transition: background-image 0.8s cubic-bezier(0.4, 0.0, 0.2, 1); 
-}
-
-/* 動態背景切換類別 */
-body.tokyo-bg { --bg-image: url('images/tokyo-tower-bg.jpg'); }
-body.nagano-bg { --bg-image: url('images/nagano-snow-bg.jpg'); }
-
-.container {
-    display: flex;
-    min-height: 100vh;
-    position: relative;
-    overflow-x: hidden;
-    opacity: 0; /* 初始隱藏，由 animate-fade-in 顯示 */
+    
+    /* 讓圖片縮放以覆蓋整個視窗 */
+    background-size: cover;          
+    
+    /* 圖片居中 */
+    background-position: center;     
+    
+    /* 確保切換背景時有平滑的過渡動畫 */
+    transition: background-image 0.8s ease-in-out; 
 }
 
 /* --- 4. 側邊欄 (Sidebar) --- */
@@ -310,4 +309,5 @@ body.nagano-bg { --bg-image: url('images/nagano-snow-bg.jpg'); }
         background-color: var(--sidebar-bg-color);
     }
     .overlay { display: none; }
+
 }
