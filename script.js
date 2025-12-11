@@ -107,30 +107,36 @@ const itineraryData = {
             { time: "備註", event: "各自回家，隔天開心上班！" }
         ]
     },
+    // ... 其他行程資料保持不變
+
     notes: {
-        date: "行前注意事項",
+        date: "行前注意事項", // 保持整體標題為「行前注意事項」
         tempKey: "notes",
         isUtility: true,
         contentHTML: `
-            <li><strong> 衣物：</strong>滑雪需自備雪衣、雪褲、手套、脖圍、面罩、毛帽、長襪。</li>
-            <li><strong> 手機：</strong>日本電壓110v，跟台灣通用。</li>
-            <li><strong> 網路：</strong>確認 SIM 卡沒有過期。</li>
-            <li><strong> 文件：</strong>護照、VJW (Visit Japan Web) 截圖。</li>
-            <li><strong> 藥品：</strong>常備藥、腸胃藥、暈車藥。</li>
-            <li><strong> 車費：包車一人29,300/日圓，在機場時統一收日圓。</li>
-        date: "住宿資料",
-        tempKey: "notes",
-        isUtility: true,
-        contentHTML: `
-            <li><strong> Super Hotel Tokyo Kameido </strong></li>
-            <li>2 Chome-13-6 Kameido, Koto City, Tokyo 136-0071日本</li>
-            <li><strong> 志賀陽光酒店 </strong></li>
-            <li>  Nagano, Shimotakai District, Yamanochi, 志賀高原高天ケ原7149 </li>
-            <li><strong> TOKYO GR HOUSE </strong></li>
-            <li> 地址待更新 </li>
+            <li><strong>衣物：</strong>滑雪需自備雪衣、雪褲、手套、脖圍、面罩、毛帽、長襪。</li>
+            <li><strong>手機：</strong>日本電壓110v，跟台灣通用。</li>
+            <li><strong>網路：</strong>確認 SIM 卡沒有過期。</li>
+            <li><strong>文件：</strong>護照、VJW (Visit Japan Web) 截圖。</li>
+            <li><strong>藥品：</strong>常備藥、腸胃藥、暈車藥。</li>
+            <li><strong>車費：</strong>包車一人29,300/日圓，在機場時統一收日圓。</li>
+            
+            <br>
+            <hr>
+            
+            <h4 style="margin-top: 15px; color: #555; border-bottom: 2px solid #ddd; padding-bottom: 5px;">📍 住宿資料</h4>
+
+            <li><strong>Super Hotel Tokyo Kameido</strong></li>
+            <li style="font-size: 0.9em; margin-bottom: 10px;">2 Chome-13-6 Kameido, Koto City, Tokyo 136-0071日本</li>
+            
+            <li><strong>志賀陽光酒店</strong></li>
+            <li style="font-size: 0.9em; margin-bottom: 10px;">Nagano, Shimotakai District, Yamanochi, 志賀高原高天ケ原7149</li>
+            
+            <li><strong>TOKYO GR HOUSE</strong></li>
+            <li style="font-size: 0.9em;">地址待更新</li>
         `
-    },
-};
+    }
+}; // itineraryData 結尾
 
 // ====== 3. 邏輯控制 ======
 
@@ -298,5 +304,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
 
 
