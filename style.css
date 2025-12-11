@@ -295,50 +295,58 @@ h1#itinerary-title, #notes-title {
     animation: staggerSlideIn 0.4s ease-out forwards;
 }
 
+/* style.css */
+
 /* --------------------------------------
  * 13. 行動裝置和響應式設計
  * -------------------------------------- */
-
-/* 覆蓋層 (Overlay) */
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
-}
-
-.container.sidebar-open #overlay {
-    display: block;
-}
+ 
+/* ... 覆蓋層 (Overlay) 保持不變 ... */
 
 /* 行動裝置樣式 (小於 768px) */
 @media (max-width: 768px) {
     
+    /* 1. 主內容區修正 (Content Area) */
     .main-content {
-        padding-left: 20px; /* 移除桌面版側邊欄留出的空間 */
+        /* 在手機上，移除桌面版側邊欄佔用的空間，讓內容靠左 */
+        padding-left: 20px; 
+        padding-right: 20px; /* 確保內容右邊也有足夠邊距 */
+        /* 🌟 新增：確保內容頂部有足夠空間，避免被選單按鈕遮蓋 🌟 */
+        padding-top: 80px; 
     }
 
-    /* 漢堡選單按鈕 */
+    /* 2. 漢堡選單按鈕 (#menu-toggle) 修正 */
     #menu-toggle {
         display: block;
-        position: fixed;
+        
+        /* 🌟 修正：確保按鈕位置固定且在最上層 🌟 */
+        position: fixed; 
         top: 20px;
         left: 20px;
-        z-index: 1001; /* 確保在側邊欄之上 */
-        font-size: 1.5em;
+        z-index: 1002; /* 必須高於側邊欄(1000)和覆蓋層(999) */
         
-        /* 確保按鈕在任何背景下可見 */
+        font-size: 1.5em;
         background: rgba(255, 255, 255, 0.8);
         color: var(--color-text);
-        
         padding: 5px 10px;
         border-radius: 5px;
         border: none;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 3. 頂部標題置中修正 (南星旅行團 JP) */
+    /* 假設您的頂部標題在 .main-content 內，且沒有自己的 class */
+    /* 如果標題是用 h2 或其他元素包裝，請使用對應的 class */
+    .main-content > * { 
+        text-align: center; /* 將內容置中 */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* 4. 行程卡片修正 */
+    .itinerary-display, .notes-display {
+        /* 在手機上，將左右邊距改為 auto，讓 max-width 生效，並確保左右不會太貼邊 */
+        padding: 20px; 
     }
 }
 
@@ -348,3 +356,4 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
