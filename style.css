@@ -13,7 +13,6 @@
     --color-secondary: #0a0a0a;
     --color-text: #0a0a0a;
     --color-text-light: #555;
-    /* 注意：此變數在卡片樣式中被固定覆蓋，以保證可讀性 */
     --color-card-bg: rgba(255, 255, 255, 0.9); 
     --color-accent: #007bff; /* 常用作連結或按鈕的強調色 */
     --color-temp-hot: #e74c3c;
@@ -29,7 +28,6 @@ body.dark-mode {
     --color-secondary: #f0f0f0;
     --color-text: #f0f0f0;
     --color-text-light: #bbb;
-    /* 雖然卡片底色被固定，但其他文字會依此變數改變 */
     --color-card-bg: rgba(30, 30, 30, 0.95);
 }
 
@@ -179,7 +177,6 @@ body.nagano-bg {
  * -------------------------------------- */
 
 #utility-navigation .nav-button {
-    /* 讓它與日期按鈕區隔開 */
     margin-top: 20px; 
     
     /* 🌟 修正：強制使用亮色背景和深色文字，提高警示度 🌟 */
@@ -245,13 +242,22 @@ h1#itinerary-title, #notes-title {
     white-space: nowrap;
 }
 
-/* style.css */
-
 /* --------------------------------------
  * 11. 行程列表與動畫
  * -------------------------------------- */
 
-/* ... #schedule-list li, #notes-content li 保持不變 ... */
+#schedule-list, #notes-content {
+    list-style: none;
+    padding: 0;
+}
+
+#schedule-list li, #notes-content li {
+    display: flex;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 4px solid var(--color-accent);
+    position: relative;
+}
 
 .time-slot {
     font-weight: bold;
@@ -263,24 +269,22 @@ h1#itinerary-title, #notes-title {
 .event-details {
     flex-grow: 1;
     padding-left: 15px;
-    color: var(--color-text-light);
     
-    /* 🌟 核心修正：新增背景區塊 🌟 */
+    /* 🌟 修正：新增背景區塊，讓文字不被背景影響 🌟 */
     background-color: rgba(255, 255, 255, 0.9); /* 使用半透明白色背景 */
     padding: 10px 15px; /* 增加內邊距 */
     border-radius: 8px; /* 增加圓角 */
     
-    /* 讓文字和背景看起來更舒適 */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     
-    /* 🌟 調整文字顏色：由於背景變白，文字應該變為深色 🌟 */
+    /* 🌟 調整文字顏色：背景變白，文字應變為深色 🌟 */
     color: var(--color-text); /* 使用深色文字變數 */
 }
 
-/* 確保夜間模式下，文字顏色也能正確切換 */
+/* 確保夜間模式下，行程細節背景和文字顏色正確切換 */
 body.dark-mode .event-details {
     background-color: rgba(30, 30, 30, 0.95); /* 夜間模式使用深色背景 */
-    color: var(--color-text); /* 文字仍為亮色 (在 dark-mode 變數中設定為亮色) */
+    color: var(--color-text); /* 文字顏色會從 dark-mode 變數中繼承亮色 */
 }
 
 /* --------------------------------------
@@ -306,30 +310,44 @@ body.dark-mode .event-details {
 /* --------------------------------------
  * 13. 行動裝置和響應式設計
  * -------------------------------------- */
- 
-/* ... 覆蓋層 (Overlay) 保持不變 ... */
+
+/* 覆蓋層 (Overlay) */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+}
+
+.container.sidebar-open #overlay {
+    display: block;
+}
 
 /* 行動裝置樣式 (小於 768px) */
 @media (max-width: 768px) {
     
     /* 1. 主內容區修正 (Content Area) */
     .main-content {
-        /* 在手機上，移除桌面版側邊欄佔用的空間，讓內容靠左 */
         padding-left: 20px; 
-        padding-right: 20px; /* 確保內容右邊也有足夠邊距 */
-        /* 🌟 新增：確保內容頂部有足夠空間，避免被選單按鈕遮蓋 🌟 */
+        padding-right: 20px; 
+        /* 🌟 修正：確保內容頂部有足夠空間，避免被選單按鈕遮蓋 🌟 */
         padding-top: 80px; 
+        
+        /* 確保手機上不會有桌面版 300px 的偏移 */
+        padding-left: 20px; 
     }
 
     /* 2. 漢堡選單按鈕 (#menu-toggle) 修正 */
     #menu-toggle {
         display: block;
-        
-        /* 🌟 修正：確保按鈕位置固定且在最上層 🌟 */
         position: fixed; 
         top: 20px;
         left: 20px;
-        z-index: 1002; /* 必須高於側邊欄(1000)和覆蓋層(999) */
+        z-index: 1002; /* 必須高於所有浮動元素 */
         
         font-size: 1.5em;
         background: rgba(255, 255, 255, 0.8);
@@ -340,19 +358,16 @@ body.dark-mode .event-details {
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     }
 
-    /* 3. 頂部標題置中修正 (南星旅行團 JP) */
-    /* 假設您的頂部標題在 .main-content 內，且沒有自己的 class */
-    /* 如果標題是用 h2 或其他元素包裝，請使用對應的 class */
-    .main-content > * { 
-        text-align: center; /* 將內容置中 */
+    /* 3. 頂部標題置中修正 */
+    /* 假設您的頂部標題是被單獨的 HTML 元素 (如 H1/H2 或 DIV) 包裹，這將嘗試將它們在手機上置中 */
+    /* 如果標題是用專門的 class 包裹 (例如 .header-title-container)，請在 index.html 內設置 */
+    .main-content > h1, 
+    .main-content > h2,
+    .main-content > p {  
+        text-align: center; /* 將標題內容置中 */
         margin-left: auto;
         margin-right: auto;
-    }
-    
-    /* 4. 行程卡片修正 */
-    .itinerary-display, .notes-display {
-        /* 在手機上，將左右邊距改為 auto，讓 max-width 生效，並確保左右不會太貼邊 */
-        padding: 20px; 
+        max-width: 100%;
     }
 }
 
@@ -362,6 +377,3 @@ body.dark-mode .event-details {
         display: none;
     }
 }
-
-
-
