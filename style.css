@@ -201,25 +201,43 @@ body.nagano-bg {
 /* --------------------------------------
  * 8. 行程顯示卡片樣式
  * -------------------------------------- */
-
-.itinerary-display, .notes-display {
-    max-width: 800px;
-    margin: 0 auto;
-    
-    /* 🌟 最終修正：強制使用固定的半透明白色背景 🌟 */
-    background-color: rgba(255, 255, 255, 0.9); /* 使用固定值取代 var() */
-    
+.display-box {
+    width: 95%; max-width: 600px; min-height: 400px;
     padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.5s, transform 0.5s;
-    position: relative;
+    border-radius: 24px; /* 更圓潤的卡片 */
+    background-color: var(--content-bg-color);
+    backdrop-filter: blur(12px); 
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-align: left; color: var(--text-color);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.5s ease, height 0.3s ease;
+    display: none;
+    /* 確保子元素的 3D 變換效果 */
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
+
+/* 🌟 卡片切換時的動畫應用 🌟 */
+.display-box.active-display {
+    display: block;
+    /* 應用新的優雅上浮動畫 */
+    animation: elegantSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.display-box h3 {
+    font-size: 26px; border-bottom: 2px solid var(--button-active-color);
+    padding-bottom: 15px; margin-bottom: 25px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-weight: 700;
+}
+
+.temperature {
+    font-size: 16px; font-weight: 700; color: var(--temp-color);
+    display: inline-block; padding: 8px 15px;
+    background-color: var(--button-bg-color); border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 /* --------------------------------------
  * 9. 標題與溫度
  * -------------------------------------- */
@@ -352,6 +370,7 @@ h1#itinerary-title, #notes-title {
         display: none;
     }
 }
+
 
 
 
