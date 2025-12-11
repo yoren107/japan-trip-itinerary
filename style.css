@@ -93,6 +93,17 @@ h1, h2, .time-slot, .temperature {
 /* 背景圖片層 */
 /* style.css */
 
+/* 確保東京背景使用正確的圖片名稱：tokyo-tower-bg.jpg */
+body.tokyo-bg {
+    /* 🌟 將 tokyo-night-bg.jpg 修正為 tokyo-tower-bg.jpg 🌟 */
+    --bg-image: url('images/tokyo-tower-bg.jpg'); 
+}
+
+/* 確保長野背景使用正確的圖片名稱：nagano-snow-bg.jpg */
+body.nagano-bg {
+    --bg-image: url('images/nagano-snow-bg.jpg');
+}
+
 body {
     /* 確保 body 佔滿整個視窗 */
     min-height: 100vh; 
@@ -340,4 +351,5 @@ body {
 .container.sidebar-open .sidebar {
     transform: translateX(0);
 }
+
 
